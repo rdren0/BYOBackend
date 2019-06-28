@@ -10,8 +10,6 @@ const createState = (knex, state) => {
   .then(stateId => {
     let parkPromises = [];
       state.parks.forEach(park => {
-        console.log(park)
-        console.log(stateId)
       parkPromises.push(
         createPark(knex, {
           ...park,
