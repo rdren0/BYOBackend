@@ -18,7 +18,7 @@ app.get('/api/v1/parks', (request, response) => {
       .catch((error) => {
         response.status(500).json({ error });
       });
-      return 'Hello world';
+      console.log('Hello world') ;
   });
 
 //   app.get('/api/v1/papers', (request, response) => {
