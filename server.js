@@ -6,9 +6,9 @@ const app = express()
 app.set('port', process.env.PORT || 3000).
 
 app.use(express.json());
-app.listen(3000, () => {
-    console.log(`App is running 🏃 on port ${port}`)
-})
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
 
 app.get('/api/v1/parks', (request, response) => {
     database('parks').select()
