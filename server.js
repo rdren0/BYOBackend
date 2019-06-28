@@ -20,6 +20,7 @@ app.get('/api/v1/', (req, res) => {
 app.get('/api/v1/parks', (request, response) => {
     database('parks').select()
       .then((parks) => {
+        console.log(parks)
         response.status(200).json(parks);
       })
       .catch((error) => {
