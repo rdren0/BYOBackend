@@ -10,6 +10,10 @@ app.listen(PORT, function(){
   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
 
+app.get('/', (req, res) => {
+  res.status(200).json('Hello world!');
+});
+
 app.get('/api/v1/parks', (request, response) => {
     database('parks').select()
       .then((parks) => {
