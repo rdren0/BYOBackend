@@ -13,6 +13,9 @@ app.listen(PORT, function(){
 app.get('/', (req, res) => {
   res.status(200).json('Hello world!');
 });
+app.get('/api/v1/', (req, res) => {
+  res.status(200).json('You have not selected a path');
+});
 
 app.get('/api/v1/parks', (request, response) => {
     database('parks').select()
@@ -25,15 +28,15 @@ app.get('/api/v1/parks', (request, response) => {
       console.log('Hello world') ;
   });
 
-//   app.get('/api/v1/states', (request, response) => {
-//     database('parks').select()
-//       .then((parks) => {
-//         response.status(200).json(parks);
-//       })
-//       .catch((error) => {
-//         response.status(500).json({ error });
-//       });
-//   });
+  app.get('/api/v1/states', (request, response) => {
+    database('states').select()
+      .then((states) => {
+        response.status(200).json(states);
+      })
+      .catch((error) => {
+        response.status(500).json({ error });
+      });
+  });
 
 //   app.post('/api/v1/states', (request, response) => {
 //     const newPaper = request.body;
