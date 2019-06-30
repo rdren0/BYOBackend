@@ -22,6 +22,7 @@ app.get("/api/v1/", (req, res) => {
   res.status(200).json("You have not selected a path");
 });
 
+// Parks
 app.get("/api/v1/parks", (request, response) => {
   database("parks")
     .select()
@@ -48,6 +49,24 @@ app.get("/api/v1/parks/:id", (request, response) => {
     .catch(error => response.status(500).json({ error }));
 });
 
+app.post("/api/v1/parks", (request, response) => {
+  const park = request.body;
+  const { name, location_id, area, visitors } = park;
+  if (!name || !location_id || !area || !visitors)
+    return response.status(422).send({
+      error: `Expected { name: <String>, location_id: <Number>, area: <Number> visitors: <Number> }. You're missing info.`
+    });
+  database("parks")
+    .insert(park, "id")
+    .then(park => {
+      response.status(201).json({ id: park[0] });
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
+// States
 app.get("/api/v1/states", (request, response) => {
   database("states")
     .select()
@@ -71,12 +90,11 @@ app.get("/api/v1/states/:id", (request, response) => {
     .catch(error => response.status(500).json({ error }));
 });
 
-
-
 app.post("/api/v1/states", (request, response) => {
   const state = request.body;
   console.log(state);
-  if (!state.name || !state.population || !state.area || !state.capital)
+  const { name, population, area, capital } = state
+  if (!name || !population || !area || !capital)
     return response.status(422).send({
       error: `Expected { name: <String>, population: <Number>, area: <Number> capital: <String> }. You're missing info.`
     });
@@ -89,3 +107,13 @@ app.post("/api/v1/states", (request, response) => {
       response.status(500).json({ error });
     });
 });
+
+// Delete
+app.delete('/api/v1/states/:id', (request, response) => { 
+  const { id } = request.params;
+  if (!id) return response.status(422).json({ error: `A state with that id does not exist, try again`});
+  database('parks').where('location_id', id).del()
+  .then(() => database('states').where('id', id).del())
+  .then(() => response.status(204).json(`State with id of: ${id}, has been deleted, along with its associated parks.`)) 
+  .catch(error => response.status(500).json({ error }));
+})
