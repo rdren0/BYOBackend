@@ -20,8 +20,6 @@ Launch in browser: `$ nodemon server.js`
 
 If the request is successful you will get back an array of objects, of states.
 
-**For example:**
-
 ```
 [
     { id: 100,
