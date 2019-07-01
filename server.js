@@ -51,19 +51,20 @@ app.get("/api/v1/parks/:id", (request, response) => {
 
 app.post("/api/v1/parks", (request, response) => {
   const park = request.body;
-  const { name, location_id, area, visitors } = park;
-  if (!name || !location_id || !area || !visitors)
+  const { name, state, area, visitors } = park;
+  if (!name || !area || !visitors ||!state)
     return response.status(422).send({
-      error: `Expected { name: <String>, location_id: <Number>, area: <Number> visitors: <Number> }. You're missing info.`
+      error: `Expected { name: <String>, state: <String>, area: <Number> visitors: <Number> }. You're missing info.`
     });
-  database("parks")
-    .insert(park, "id")
-    .then(park => {
-      response.status(201).json({ id: park[0] });
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
+  database('states').where('name', state)
+  .then(result => database("parks")
+  .insert({"name":name,"area":area, "visitors":visitors, "location_id": result[0].id}, "id")
+  .then(park => {
+    response.status(201).json({ id: park[0] });
+  })
+  .catch(error => {
+    response.status(500).json({ error });
+  }))
 });
 
 // States
@@ -93,7 +94,7 @@ app.get("/api/v1/states/:id", (request, response) => {
 app.post("/api/v1/states", (request, response) => {
   const state = request.body;
   console.log(state);
-  const { name, population, area, capital } = state
+  const { name, population, area, capital } = state;
   if (!name || !population || !area || !capital)
     return response.status(422).send({
       error: `Expected { name: <String>, population: <Number>, area: <Number> capital: <String> }. You're missing info.`
