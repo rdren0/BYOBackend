@@ -53,6 +53,7 @@ If the request is successful you will get back the id of the state you entered.
 ### GET /api/v1/states/:id
 
 If the request is successful you will get back the state with the matching id.
+
 ```
 {     id: 203
       name: "Hawaii",
@@ -60,7 +61,7 @@ If the request is successful you will get back the state with the matching id.
       area: 28313,
       capital: "Honolulu"
       }
-      ```
+```
 
 ### GET /api/v1/parks
 
