@@ -37,16 +37,6 @@ If the request is successful you will get back an array of objects, of states.
 ]
 ```
 
-### POST /api/v1/states
-
-If the request is successful you will get back the id of the state you entered.
-
-
-```
-{
-  id:506
-}
-```
 
 ### GET /api/v1/states/:id
 
@@ -60,6 +50,18 @@ If the request is successful you will get back the state with the matching id.
       capital: "Honolulu"
       }
 ```
+
+### POST /api/v1/states
+
+If the request is successful you will get back the id of the state you entered.
+
+
+```
+{
+  id:506
+}
+```
+
 
 ### GET /api/v1/parks
 
@@ -94,6 +96,18 @@ If the request is successful you will get back an array of objects, of parks.
 ]
 ```
 
+
+### GET /api/v1/parks/:id
+
+If the request is successful you will get back the park with the matching id.
+```
+{     "name": "Gateway Arch",
+        "area": 0.8,
+        "locatoin_id": 55,
+        "visitors": 2016180
+      }
+```
+
 ### POST /api/v1/parks
 
 If the request is successful you will get back the id of the park you entered.
@@ -105,19 +119,7 @@ If the request is successful you will get back the id of the park you entered.
 }
 ```
 
-### GET /api/v1/parks/:id
-
-If the request is successful you will get back the park with the matching id.
-```
-{
-        "name": "Gateway Arch",
-        "area": 0.8,
-        "locatoin_id": 55,
-        "visitors": 2016180
-      }
-      ```
-
-
+   
 ### DELETE /api/v1/states/:id
 
 If the request is successful it will return a message with the specified id.
