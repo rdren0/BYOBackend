@@ -67,8 +67,6 @@ If the request is successful you will get back the state with the matching id.
 
 If the request is successful you will get back an array of objects, of parks.
 
-**For example:**
-
 ```
 [
      {
@@ -130,6 +128,4 @@ If the request is successful it will return a message with the specified id.
 ```
 `State with id of: ${id}, has been deleted, along with its associated parks.`
 ```
-
----
 
