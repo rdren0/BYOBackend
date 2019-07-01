@@ -1,8 +1,10 @@
 # Build Your Own Backend
 
-## Overview:
 
 BYOB is a solo project with the goal of learning how to create your own backend server with endpoints using Express, Knex, and Postgres.
+
+By: 
+* Rachael Drennan https://github.com/rdren0
 
 ## To begin:
 
