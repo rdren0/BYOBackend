@@ -32,3 +32,5 @@ exports.seed = (knex) => {
     })
     .catch(error => console.log(`Error seeding data: ${error}`));
 };
+
+// 
