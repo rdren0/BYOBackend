@@ -7,18 +7,7 @@ const createState = (knex, state) => {
     area: parseInt(state.area),
     capital: state.capital
   }, 'id')
-  .then(stateId => {
-    let parkPromises = [];
-      state.parks.forEach(park => {
-      parkPromises.push(
-        createPark(knex, {
-          ...park,
-          stateId
-        })
-      )
-    });
-    return Promise.all(parkPromises);
-  })
+
 };
 
 const createPark = (knex, park) => {
