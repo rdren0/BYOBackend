@@ -1,8 +1,10 @@
 # Build Your Own Backend
 
-## Overview:
 
 BYOB is a solo project with the goal of learning how to create your own backend server with endpoints using Express, Knex, and Postgres.
+
+By: 
+* Rachael Drennan https://github.com/rdren0
 
 ## To begin:
 
@@ -19,8 +21,6 @@ Launch in browser: `$ nodemon server.js`
 ### GET /api/v1/states
 
 If the request is successful you will get back an array of objects, of states.
-
-**For example:**
 
 ```
 [
@@ -39,6 +39,20 @@ If the request is successful you will get back an array of objects, of states.
 ]
 ```
 
+
+### GET /api/v1/states/:id
+
+If the request is successful you will get back the state with the matching id.
+
+```
+{     id: 203
+      name: "Hawaii",
+      population: 1427538,
+      area: 28313,
+      capital: "Honolulu"
+      }
+```
+
 ### POST /api/v1/states
 
 If the request is successful you will get back the id of the state you entered.
@@ -50,23 +64,10 @@ If the request is successful you will get back the id of the state you entered.
 }
 ```
 
-### GET /api/v1/states/:id
-
-If the request is successful you will get back the state with the matching id.
-```
-{     id: 203
-      name: "Hawaii",
-      population: 1427538,
-      area: 28313,
-      capital: "Honolulu"
-      }
-      ```
 
 ### GET /api/v1/parks
 
 If the request is successful you will get back an array of objects, of parks.
-
-**For example:**
 
 ```
 [
@@ -97,6 +98,18 @@ If the request is successful you will get back an array of objects, of parks.
 ]
 ```
 
+
+### GET /api/v1/parks/:id
+
+If the request is successful you will get back the park with the matching id.
+```
+{     "name": "Gateway Arch",
+        "area": 0.8,
+        "locatoin_id": 55,
+        "visitors": 2016180
+      }
+```
+
 ### POST /api/v1/parks
 
 If the request is successful you will get back the id of the park you entered.
@@ -108,19 +121,7 @@ If the request is successful you will get back the id of the park you entered.
 }
 ```
 
-### GET /api/v1/parks/:id
-
-If the request is successful you will get back the park with the matching id.
-```
-{
-        "name": "Gateway Arch",
-        "area": 0.8,
-        "locatoin_id": 55,
-        "visitors": 2016180
-      }
-      ```
-
-
+   
 ### DELETE /api/v1/states/:id
 
 If the request is successful it will return a message with the specified id.
@@ -129,6 +130,4 @@ If the request is successful it will return a message with the specified id.
 ```
 `State with id of: ${id}, has been deleted, along with its associated parks.`
 ```
-
----
 

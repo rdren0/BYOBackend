@@ -15,11 +15,11 @@ app.listen(PORT, function() {
 });
 
 app.get("/", (req, res) => {
-  res.status(200).json("Hello world!");
+  res.status(200).json("You have not selected a path! Try /api/v1/states or api/v1/parks");
 });
 
 app.get("/api/v1/", (req, res) => {
-  res.status(200).json("You have not selected a path");
+  res.status(200).json("You have not selected a path! Try /states or /parks"); 
 });
 
 // Parks
@@ -27,13 +27,11 @@ app.get("/api/v1/parks", (request, response) => {
   database("parks")
     .select()
     .then(parks => {
-      console.log(parks);
       response.status(200).json(parks);
     })
     .catch(error => {
       response.status(500).json({ error });
     });
-  console.log("Hello world");
 });
 
 app.get("/api/v1/parks/:id", (request, response) => {
@@ -41,12 +39,12 @@ app.get("/api/v1/parks/:id", (request, response) => {
     .where("id", request.params.id)
     .select()
     .then(parks => {
-      if (parks.length) return response.status(200).json(parks);
+      if (parks.length) return response.status(200).json(parks); 
       return response
         .status(404)
-        .json({ error: `Could not find park with id ${request.params.id}` });
+        .json({ error: `Could not find park with id ${request.params.id}` }); 
     })
-    .catch(error => response.status(500).json({ error }));
+    .catch(error => response.status(500).json({ error }));  
 });
 
 app.post("/api/v1/parks", (request, response) => {
@@ -55,45 +53,44 @@ app.post("/api/v1/parks", (request, response) => {
   if (!name || !area || !visitors ||!state)
     return response.status(422).send({
       error: `Expected { name: <String>, state: <String>, area: <Number> visitors: <Number> }. You're missing info.`
-    });
-  database('states').where('name', state)
-  .then(result => database("parks")
-  .insert({"name":name,"area":area, "visitors":visitors, "location_id": result[0].id}, "id")
+    }); 
+  database('states').where('name', state) 
+  .then(result => database("parks") 
+  .insert({"name":name,"area":area, "visitors":visitors, "location_id": result[0].id}, "id") 
   .then(park => {
-    response.status(201).json({ id: park[0] });
+    response.status(201).json({ id: park[0] }); 
   })
   .catch(error => {
-    response.status(500).json({ error });
+    response.status(500).json({ error }); 
   }))
 });
 
 // States
 app.get("/api/v1/states", (request, response) => {
   database("states")
-    .select()
+    .select() 
     .then(states => {
-      response.status(200).json(states);
+      response.status(200).json(states); 
     })
     .catch(error => {
-      response.status(500).json({ error });
+      response.status(500).json({ error }); 
     });
 });
 app.get("/api/v1/states/:id", (request, response) => {
-  database("states")
-    .where("id", request.params.id)
-    .select()
+  database("states") 
+    .where("id", request.params.id) 
+    .select() 
     .then(states => {
-      if (states.length) return response.status(200).json(states);
+      if (states.length) return response.status(200).json(states); 
       return response
         .status(404)
-        .json({ error: `Could not find state with id ${request.params.id}` });
+        .json({ error: `Could not find state with id ${request.params.id}` }); 
     })
-    .catch(error => response.status(500).json({ error }));
+    .catch(error => response.status(500).json({ error })); 
 });
 
 app.post("/api/v1/states", (request, response) => {
   const state = request.body;
-  console.log(state);
   const { name, population, area, capital } = state;
   if (!name || !population || !area || !capital)
     return response.status(422).send({
@@ -102,7 +99,7 @@ app.post("/api/v1/states", (request, response) => {
   database("states")
     .insert(state, "id")
     .then(state => {
-      response.status(201).json({ id: state[0] });
+      response.status(201).json({ id: state[0] }); 
     })
     .catch(error => {
       response.status(500).json({ error });
@@ -112,9 +109,17 @@ app.post("/api/v1/states", (request, response) => {
 // Delete
 app.delete('/api/v1/states/:id', (request, response) => { 
   const { id } = request.params;
-  if (!id) return response.status(422).json({ error: `A state with that id does not exist, try again`});
-  database('parks').where('location_id', id).del()
-  .then(() => database('states').where('id', id).del())
-  .then(() => response.status(204).json(`State with id of: ${id}, has been deleted, along with its associated parks.`)) 
-  .catch(error => response.status(500).json({ error }));
+  if (!id) return response.status(422).json({ error: `A state with that id does not exist, try again`}); 
+  database('parks').where('location_id', id).del() 
+  .then(() => database('states').where('id', id).del()) 
+  .then(() => response.status(204).json(`State with id of: ${id}, has been deleted, along with its associated parks.`))  
+  .catch(error => response.status(500).json({ error })); 
+})
+
+app.delete('/api/v1/parks/:id', (request, response) => { 
+  const { id } = request.params;
+  if (!id) return response.status(422).json({ error: `A park with that id does not exist, try again`}); 
+  database('parks').where('id', id).del() 
+  .then(() => response.status(204).json(`Park with id of: ${id}, has been deleted.`))  
+  .catch(error => response.status(500).json({ error })); 
 })
